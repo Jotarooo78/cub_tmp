@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armosnie <armosnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: messengu <messengu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 13:08:13 by armosnie          #+#    #+#             */
-/*   Updated: 2025/12/15 17:42:23 by armosnie         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:31:32 by messengu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	init_color_2(t_text *text, char **split_path, char *texture)
 {
 	if (ft_strcmp(texture, "floor") == 0)
 	{
-		text->fl->r = ft_atoi(split_path[0]);
-		text->fl->g = ft_atoi(split_path[1]);
-		text->fl->b = ft_atoi(split_path[2]);
+		text->fl->r = ft_atol(split_path[0]);
+		text->fl->g = ft_atol(split_path[1]);
+		text->fl->b = ft_atol(split_path[2]);
 		if (!(text->fl->r >= 0 && text->fl->r <= 255 && text->fl->g >= 0
 				&& text->fl->g <= 255 && text->fl->b >= 0
 				&& text->fl->b <= 255))
@@ -26,9 +26,9 @@ int	init_color_2(t_text *text, char **split_path, char *texture)
 	}
 	else if (ft_strcmp(texture, "celing") == 0)
 	{
-		text->ce->r = ft_atoi(split_path[0]);
-		text->ce->g = ft_atoi(split_path[1]);
-		text->ce->b = ft_atoi(split_path[2]);
+		text->ce->r = ft_atol(split_path[0]);
+		text->ce->g = ft_atol(split_path[1]);
+		text->ce->b = ft_atol(split_path[2]);
 		if (!(text->ce->r >= 0 && text->ce->r <= 255 && text->ce->g >= 0
 				&& text->ce->g <= 255 && text->ce->b >= 0
 				&& text->ce->b <= 255))
@@ -44,8 +44,8 @@ int	init_color(t_text *text, char *path, int ret)
 	char	**split_path;
 
 	split_path = ft_split(path, ',');
-	if (!split_path)
-		return (1);
+	if (!split_path || !split_path[0] || !split_path[1] || !split_path[2])
+		return (free_array(split_path), printf("Wrong color set\n"), 1);
 	if (split_path[3])
 		return (free_array(split_path), printf("Wrong color set\n"), 1);
 	if (ret == 5)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matis <matis@student.42.fr>                +#+  +:+       +#+        */
+/*   By: armosnie <armosnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 17:02:05 by armosnie          #+#    #+#             */
-/*   Updated: 2025/12/15 11:56:51 by matis            ###   ########.fr       */
+/*   Updated: 2025/12/16 14:41:58 by armosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,47 @@ int	check_wall(char **map)
 	int	i;
 	int	j;
 	int	len;
+	int line_len;
 
-	i = 0;
+	i = 1;
 	len = count_map(map);
 	while (map[i] && i < len)
 	{
-		j = 1;
+		j = 0;
 		while (skip_whitespace(map[i][j]))
 			j++;
+		line_len = ft_strlen(map[i]) - j;
 		while (map[i][j])
 		{
+			if (map[len - 1][j] == '0' || map[0][j] == '0')
+				return (1);
 			if (is_different_content(map, i, j))
 				return (1);
 			j++;
 		}
 		i++;
 	}
+	return (0);
+}
+
+int	is_map_char(char c)
+{
+	if (!c)
+		return (0);
+	if (c == '1')
+		return (1);
+	if (c == '0')
+		return (1);
+	if (c == 'S')
+		return (1);
+	if (c == 'N')
+		return (1);
+	if (c == 'E')
+		return (1);
+	if (c == 'W')
+		return (1);
+	if (c == ' ')
+		return (1);
 	return (0);
 }
 
@@ -73,7 +98,9 @@ void	transform_space_into_1(t_data *data)
 		j = 0;
 		while (j < len)
 		{
-			if (data->map[i][j] == ' ' || data->map[i][j] == '\0')
+			if ((data->map[i][j] == ' ' || data->map[i][j] == '\0')
+					&& (j > 0 && is_map_char(data->map[i][j - 1]))
+					&& (j < (len - 1) && is_map_char(data->map[i][j + 1])))
 				data->map[i][j] = '1';
 			j++;
 		}
@@ -90,10 +117,9 @@ int	parse_map(t_data *data)
 		return (error_2(data, "invalid character in map\n"), 1);
 	if (player_position(data))
 		return (error_2(data, "0 or more than 1 player\n"), 1);
+	transform_space_into_1(data);
 	if (check_wall(data->map))
 		return (error_2(data, "invalid map format\n"), 1);
-	transform_space_into_1(data);
 	get_map_x_y(data);
-	print_array(data->map);
 	return (0);
 }

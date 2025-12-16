@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_text_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armosnie <armosnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: messengu <messengu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:27:44 by armosnie          #+#    #+#             */
-/*   Updated: 2025/12/15 17:45:20 by armosnie         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:35:48 by messengu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	detect_features(char **map)
 {
 	int		i;
+	int		end;
 	int		count;
 	char	*trimmed;
 
 	i = 0;
+	end = 0;
 	count = 0;
 	while (map[i])
 	{
@@ -29,10 +31,12 @@ int	detect_features(char **map)
 			|| trimmed[0] == 'E' || trimmed[0] == 'F' || trimmed[0] == 'C')
 			count++;
 		free(trimmed);
+		if (count < 6)
+			end++;
 		i++;
-		if (count == 6)
-			return (i);
 	}
+	if (count == 6)
+		return (end + 1);
 	return (-1);
 }
 
@@ -70,8 +74,7 @@ int	manage_features(t_data *data)
 		ret = check_features(split[0]);
 		if (ret >= 0)
 		{
-			if (is_features_init(data, ret) || init_features_data(data, split,
-					ret) != 0)
+			if (ifi(data, ret) || ifd(data, split, ret) != 0)
 				return (free_array(split), 1);
 		}
 		else

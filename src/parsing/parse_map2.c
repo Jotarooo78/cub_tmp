@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matis <matis@student.42.fr>                +#+  +:+       +#+        */
+/*   By: messengu <messengu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:06:28 by armosnie          #+#    #+#             */
-/*   Updated: 2025/12/15 11:57:04 by matis            ###   ########.fr       */
+/*   Updated: 2025/12/16 12:21:26 by messengu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,22 +111,21 @@ char	**dup_only_map(t_data *data)
 	char	**new_map;
 	int		len;
 
-	i = 0;
 	len = 0;
 	start = start_of_map(data->map);
 	if (start == -1)
-		return (NULL);
+		return (free_array(data->map), NULL);
 	while (data->map[start + len])
 		len++;
 	new_map = malloc(sizeof(char *) * (len + 1));
 	if (!new_map)
-		return (NULL);
+		return (free_array(data->map), NULL);
 	i = 0;
 	while (i < len)
 	{
 		new_map[i] = strdup_with_longest_line(data, data->map[start + i]);
 		if (!new_map[i])
-			return (free_array(new_map), NULL);
+			return (free_array(data->map), free_array(new_map), NULL);
 		i++;
 	}
 	new_map[len] = NULL;

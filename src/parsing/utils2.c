@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armosnie <armosnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: messengu <messengu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:22:36 by armosnie          #+#    #+#             */
-/*   Updated: 2025/12/15 17:38:09 by armosnie         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:51:23 by messengu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,26 @@ char	*strdup_with_longest_line(t_data *data, char *s1)
 	return (dup);
 }
 
+long	ft_atol(const char *str)
+{
+	int		i;
+	long	res;
+	long	mult;
+
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+		mult = -1;
+	else
+		mult = 1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	res = 0;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (res * mult);
+}

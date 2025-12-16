@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armosnie <armosnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: messengu <messengu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:11:56 by armosnie          #+#    #+#             */
-/*   Updated: 2025/12/15 17:22:24 by armosnie         ###   ########.fr       */
+/*   Updated: 2025/12/16 11:52:38 by messengu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	is_features_init(t_data *data, int ret)
+int	ifi(t_data *data, int ret)
 {
 	if (!data || !data->text)
 		return (0);
@@ -69,7 +69,7 @@ int	is_dup_failed(t_data *data, int ret)
 	return (0);
 }
 
-int	init_features_data(t_data *data, char **split, int ret)
+int	ifd(t_data *data, char **split, int ret)
 {
 	if (ret == 1)
 		if (!check_ext(split[1], ".xpm"))
